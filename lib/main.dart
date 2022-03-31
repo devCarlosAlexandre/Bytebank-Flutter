@@ -62,9 +62,31 @@ class Transferencia {
 class FormularioTransferencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-  return Scaffold (
-    appBar: AppBar(title: Text('Criando Transferências'),),
-    body:Text('Olá Seja Bem Vindo!')
-  );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criando Transferências'),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            style: TextStyle(fontSize: 24.0),
+            decoration: InputDecoration(
+              labelText: 'Numero da conta:',
+              hintText: '000',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              style: TextStyle(fontSize: 24.0),
+              decoration: InputDecoration(
+                labelText: 'Valor da transferencia:',
+                hintText: '0.0',
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

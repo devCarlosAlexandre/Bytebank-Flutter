@@ -68,11 +68,15 @@ class FormularioTransferencia extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          TextField(
-            style: TextStyle(fontSize: 24.0),
-            decoration: InputDecoration(
-              labelText: 'Numero da conta:',
-              hintText: '000',
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              style: TextStyle(fontSize: 24.0),
+              decoration: InputDecoration(
+                labelText: 'Numero da conta:',
+                hintText: '000',
+              ),
+              keyboardType: TextInputType.number,
             ),
           ),
           Padding(
@@ -80,11 +84,15 @@ class FormularioTransferencia extends StatelessWidget {
             child: TextField(
               style: TextStyle(fontSize: 24.0),
               decoration: InputDecoration(
+                icon: Icon(Icons.monetization_on),
                 labelText: 'Valor da transferencia:',
                 hintText: '0.0',
               ),
+              keyboardType: TextInputType.number,
             ),
-          )
+          ),
+          ElevatedButton(onPressed: () {}, child: const Text('Clique aqui')),
+          
         ],
       ),
     );

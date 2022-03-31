@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(Bytebankapp());
@@ -57,6 +59,11 @@ class Transferencia {
   final double valor;
   final int numeroConta;
   Transferencia(this.valor, this.numeroConta);
+
+  @override 
+  String toString(){
+    return 'Transferencia{valor: $valor, numeroConta: $numeroConta}';
+  }
 }
 
 class FormularioTransferencia extends StatelessWidget {
@@ -99,13 +106,15 @@ class FormularioTransferencia extends StatelessWidget {
           RaisedButton(
             child: Text('CONFIRMAR'),
             onPressed: () {
-              final int? numeroConta = int.tryParse( _controladorCampoNumeroConta.text);
-               final double? valor = double.tryParse( _controladorCampoNumeroConta.text);
-               if (numeroConta != null && valor != null) {
-               final transferenciaCriada = Transferencia(valor, numeroConta);
-               double teste = transferenciaCriada.valor;
-               debugPrint('$transferenciaCriada  seu valor de transferencia e $teste');
-             }
+              final int? numeroConta =
+                  int.tryParse(_controladorCampoNumeroConta.text);
+              final double? valor =
+                  double.tryParse(_controladorCampoNumeroConta.text);
+              if (numeroConta != null && valor != null) {
+                final transferenciaCriada = Transferencia(valor, numeroConta);
+                debugPrint(transferenciaCriada.toString());
+              }
+
             },
           ),
         ],

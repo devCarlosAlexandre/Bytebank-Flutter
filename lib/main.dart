@@ -60,7 +60,8 @@ class Transferencia {
 }
 
 class FormularioTransferencia extends StatelessWidget {
-  final TextEditingController _controladorCampoNumeroConta = TextEditingController();
+  final TextEditingController _controladorCampoNumeroConta =
+      TextEditingController();
   final TextEditingController _controladorCampoValor = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -98,13 +99,13 @@ class FormularioTransferencia extends StatelessWidget {
           RaisedButton(
             child: Text('CONFIRMAR'),
             onPressed: () {
-              final int numeroConta =
-                  int.tryParse(_controladorCampoNumeroConta);
-              final double valor = double.tryParse(_controladorCampoValor);
-
-              if (valor != null && numeroConta != null) {
-                Transferencia(valor, numeroConta);
-              }
+              final int? numeroConta = int.tryParse( _controladorCampoNumeroConta.text);
+               final double? valor = double.tryParse( _controladorCampoNumeroConta.text);
+               if (numeroConta != null && valor != null) {
+               final transferenciaCriada = Transferencia(valor, numeroConta);
+               double teste = transferenciaCriada.valor;
+               debugPrint('$transferenciaCriada  seu valor de transferencia e $teste');
+             }
             },
           ),
         ],

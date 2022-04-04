@@ -78,18 +78,7 @@ class FormularioTransferencia extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controladorCampoNumeroConta,
-              style: TextStyle(fontSize: 24.0),
-              decoration: InputDecoration(
-                labelText: 'Numero da conta:',
-                hintText: '000',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
+          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -113,6 +102,11 @@ class FormularioTransferencia extends StatelessWidget {
               if (numeroConta != null && valor != null) {
                 final transferenciaCriada = Transferencia(valor, numeroConta);
                 debugPrint(transferenciaCriada.toString());
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('$transferenciaCriada'),
+                    ),
+                  );
               }
 
             },
@@ -122,3 +116,6 @@ class FormularioTransferencia extends StatelessWidget {
     );
   }
 }
+
+
+

@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() => runApp(Bytebankapp());
 
@@ -9,30 +10,40 @@ class Bytebankapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FormularioTransferencia(),
+        body: ListaTransferencias(),
       ),
     );
   }
 }
 
 class ListaTransferencias extends StatelessWidget {
+final List<Transferencia> _transferencias = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Transferências"),
       ),
-      body: Column(
-        children: <Widget>[
-          ItemTransfeerncia(Transferencia(100.0, 154)),
-          ItemTransfeerncia(Transferencia(1050.90, 0123)),
-          ItemTransfeerncia(Transferencia(158.59, 508)),
-          ItemTransfeerncia(Transferencia(230.00, 1974)),
-        ],
+      body: ListView.builder(
+       itemCount:  _transferencias.length,
+       itemBuilder: (context, indice){
+         final transferencia = _transferencias[indice];
+         return ItemTransfeerncia(transferencia);
+       },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
         child: Icon(Icons.add),
+        onPressed: () {
+           final Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) {
+             return FormularioTransferencia();
+          }));
+          future.then((transferenciaRecebida) {
+            debugPrint('chegou no then do future');
+            debugPrint('$transferenciaRecebida');
+            _transferencias.add(transferenciaRecebida);
+          });
+        },
       ),
     );
   }
@@ -78,29 +89,36 @@ class FormularioTransferencia extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Editor(controlador: _controladorCampoNumeroConta, rotulo: 'Número da conta', dica: '000-00',),
-          Editor(controlador: _controladorCampoValor, rotulo: 'Valor da transferencia',dica: '0.00', icone: Icons.monetization_on,),
+          Editor(
+            controlador: _controladorCampoNumeroConta,
+            rotulo: 'Número da conta',
+            dica: '000-00',
+          ),
+          Editor(
+            controlador: _controladorCampoValor,
+            rotulo: 'Valor da transferencia',
+            dica: '0.00',
+            icone: Icons.monetization_on,
+          ),
           RaisedButton(
             child: Text('CONFIRMAR'),
             onPressed: () {
-              final int? numeroConta =
-                  int.tryParse(_controladorCampoNumeroConta.text);
-              final double? valor =
-                  double.tryParse(_controladorCampoValor.text);
-              if (numeroConta != null && valor != null) {
-                final transferenciaCriada = Transferencia(valor, numeroConta);
-                debugPrint(transferenciaCriada.toString());
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$transferenciaCriada'),
-                  ),
-                );
-              }
+              _criaTranferencia(context);
             },
           ),
         ],
       ),
     );
+  }
+
+  void _criaTranferencia( BuildContext context) {
+    final int? numeroConta = int.tryParse(_controladorCampoNumeroConta.text);
+    final double? valor = double.tryParse(_controladorCampoValor.text);
+    if (numeroConta != null && valor != null) {
+      final transferenciaCriada = Transferencia(valor, numeroConta);
+      debugPrint('$transferenciaCriada');
+      Navigator.pop(context, transferenciaCriada);
+    }
   }
 }
 
@@ -109,7 +127,7 @@ class Editor extends StatelessWidget {
   final String? rotulo;
   final String? dica;
   final IconData? icone;
-Editor({this.controlador, this.dica, this.rotulo, this.icone});
+  Editor({this.controlador, this.dica, this.rotulo, this.icone});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +137,7 @@ Editor({this.controlador, this.dica, this.rotulo, this.icone});
         controller: controlador,
         style: TextStyle(fontSize: 24.0),
         decoration: InputDecoration(
-          icon:icone != null ? Icon(icone): null,
+          icon: icone != null ? Icon(icone) : null,
           labelText: rotulo,
           hintText: dica,
         ),

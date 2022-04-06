@@ -16,42 +16,45 @@ class Bytebankapp extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatelessWidget {
-final List<Transferencia> _transferencias = [];
+class ListaTransferencias extends StatefulWidget {
+  final List<Transferencia> _transferencias = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Transferências"),
-      ),
-      body: ListView.builder(
-       itemCount:  _transferencias.length,
-       itemBuilder: (context, indice){
-         final transferencia = _transferencias[indice];
-         return ItemTransfeerncia(transferencia);
-       },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-           final Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) {
-             return FormularioTransferencia();
-          }));
-          future.then((transferenciaRecebida) {
-            debugPrint('chegou no then do future');
-            debugPrint('$transferenciaRecebida');
-            _transferencias.add(transferenciaRecebida);
-          });
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Transferências"),
+        ),
+        body: ListView.builder(
+          itemCount: _transferencias.length,
+          itemBuilder: (context, indice) {
+            final transferencia = _transferencias[indice];
+            return ItemTransferencia(transferencia);
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            final Future<Transferencia> future =
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return FormularioTransferencia();
+            }));
+            future.then((transferenciaRecebida) {
+              debugPrint('chegou no then do future');
+              debugPrint('$transferenciaRecebida');
+              _transferencias.add(transferenciaRecebida);
+            });
+          },
+        ));
   }
 }
-
-class ItemTransfeerncia extends StatelessWidget {
+@override 
+State<StateFulWidget> createState(){
+  return null;
+}
+class ItemTransferencia extends StatelessWidget {
   final Transferencia transferencia;
-  ItemTransfeerncia(
+  ItemTransferencia(
     this.transferencia,
   );
   @override
@@ -111,7 +114,7 @@ class FormularioTransferencia extends StatelessWidget {
     );
   }
 
-  void _criaTranferencia( BuildContext context) {
+  void _criaTranferencia(BuildContext context) {
     final int? numeroConta = int.tryParse(_controladorCampoNumeroConta.text);
     final double? valor = double.tryParse(_controladorCampoValor.text);
     if (numeroConta != null && valor != null) {

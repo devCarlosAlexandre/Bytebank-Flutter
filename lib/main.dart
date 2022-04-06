@@ -16,7 +16,7 @@ class Bytebankapp extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatefulWidget {
+class ListaTransferencias extends StatelessWidget {
   final List<Transferencia> _transferencias = [];
 
   @override
@@ -35,7 +35,7 @@ class ListaTransferencias extends StatefulWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            final Future<Transferencia> future =
+            final Future<dynamic> future =
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
               return FormularioTransferencia();
             }));
@@ -48,10 +48,7 @@ class ListaTransferencias extends StatefulWidget {
         ));
   }
 }
-@override 
-State<StateFulWidget> createState(){
-  return null;
-}
+
 class ItemTransferencia extends StatelessWidget {
   final Transferencia transferencia;
   ItemTransferencia(

@@ -16,9 +16,17 @@ class Bytebankapp extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatelessWidget {
-  final List<Transferencia> _transferencias = [];
+class ListaTransferencias extends StatefulWidget {
 
+List<Transferencia> get _transferencias => [];
+ 
+  @override 
+  State<StatefulWidget> createState(){
+    return ListaTransferenciaState();
+  }
+}
+class ListaTransferenciaState extends State<ListaTransferencias>{
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +34,9 @@ class ListaTransferencias extends StatelessWidget {
           title: Text("Transferências"),
         ),
         body: ListView.builder(
-          itemCount: _transferencias.length,
+          itemCount: widget._transferencias.length,
           itemBuilder: (context, indice) {
-            final transferencia = _transferencias[indice];
+            final transferencia = widget._transferencias[indice];
             return ItemTransferencia(transferencia);
           },
         ),
@@ -42,11 +50,12 @@ class ListaTransferencias extends StatelessWidget {
             future.then((transferenciaRecebida) {
               debugPrint('chegou no then do future');
               debugPrint('$transferenciaRecebida');
-              _transferencias.add(transferenciaRecebida);
+              widget._transferencias.add(transferenciaRecebida);
             });
           },
         ));
   }
+
 }
 
 class ItemTransferencia extends StatelessWidget {
@@ -81,6 +90,8 @@ class FormularioTransferencia extends StatelessWidget {
   final TextEditingController _controladorCampoNumeroConta =
       TextEditingController();
   final TextEditingController _controladorCampoValor = TextEditingController();
+
+  get color => null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +111,7 @@ class FormularioTransferencia extends StatelessWidget {
             dica: '0.00',
             icone: Icons.monetization_on,
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text('CONFIRMAR'),
             onPressed: () {
               _criaTranferencia(context);
@@ -116,6 +127,7 @@ class FormularioTransferencia extends StatelessWidget {
     final double? valor = double.tryParse(_controladorCampoValor.text);
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(valor, numeroConta);
+      debugPrint('Criando transferência');
       debugPrint('$transferenciaCriada');
       Navigator.pop(context, transferenciaCriada);
     }

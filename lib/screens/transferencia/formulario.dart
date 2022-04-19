@@ -41,6 +41,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
                 controlador: _controladorCampoNumeroConta,
                 dica: _dicaCampoNumeroConta,
                 rotulo: _rotuloCampoNumeroConta,
+               
               ),
               Editor(
                 dica: _dicaCampoValor,

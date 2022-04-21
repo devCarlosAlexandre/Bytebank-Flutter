@@ -1,6 +1,7 @@
-import 'package:cauculaimc/models/transferencia.dart';
-import 'package:cauculaimc/screens/transferencia/lista.dart';
+
 import 'package:flutter/material.dart';
+
+import 'screens/transferencia/interacao.dart';
 
 void main() => runApp(BytebankApp());
 
@@ -15,7 +16,7 @@ class BytebankApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.blueAccent[700]),
       ),
-      home: ListaTransferencias(),
+      home: Interacao(),
     );
   }
 }
